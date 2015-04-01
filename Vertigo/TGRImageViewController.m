@@ -27,6 +27,10 @@
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *singleTapGestureRecognizer;
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *doubleTapGestureRecognizer;
 
+#pragma mark - Strate
+
+@property (nonatomic) NSUInteger authorizedInterfaceOrientations;
+
 @end
 
 @implementation TGRImageViewController
@@ -34,6 +38,7 @@
 - (id)initWithImage:(UIImage *)image {
     if (self = [super init]) {
         _image = image;
+        _authorizedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
     }
     
     return self;
@@ -87,6 +92,27 @@
         // Zoom out
         [self.scrollView zoomToRect:self.scrollView.bounds animated:YES];
     }
+}
+
+#pragma mark - Strate
+
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return self.authorizedInterfaceOrientations;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
+    self.authorizedInterfaceOrientations = UIInterfaceOrientationMaskAll;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    
+    self.authorizedInterfaceOrientations = UIInterfaceOrientationMaskPortrait;
 }
 
 @end
